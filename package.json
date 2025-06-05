@@ -1,0 +1,12 @@
+{
+  "name": "awsLambdaEmail",
+  "version": "1.0.0",
+  "description": "Função AWS Lambda para envio de e-mails via Amazon SES",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Patrick Cianorte",
+  "license": "MIT",
+  "dependencies": {}
+}
