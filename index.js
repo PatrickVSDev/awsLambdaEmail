@@ -1,40 +1,39 @@
-const AWS = require('aws-sdk');
-const ses = new AWS.SES();
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
-exports.handler = async (event) => {
-    let body;
+const ses = new SESClient({ region: "us-east-2" });
 
-    try {
-        body = JSON.parse(event.body || event);
-    } catch (err) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({ message: 'Entrada inválida. Esperado JSON com email, subject e message.' })
-        };
-    }
-
-    const { email, subject, message } = body;
+export const handler = async (event) => {
+  try {
+    const body = typeof event.body === "string" ? JSON.parse(event.body) : event.body;
 
     const params = {
-        Destination: { ToAddresses: [email] },
-        Message: {
-            Body: { Text: { Data: message } },
-            Subject: { Data: subject }
+      Destination: {
+        ToAddresses: [body.email],
+      },
+      Message: {
+        Body: {
+          Text: {
+            Data: body.message,
+          },
         },
-        Source: "patrickcianorte@gmail.com"
+        Subject: {
+          Data: body.subject,
+        },
+      },
+      Source: "patrickcianorte@gmail.com",
     };
 
-    try {
-        await ses.sendEmail(params).promise();
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: 'Email enviado com sucesso!' })
-        };
-    } catch (error) {
-        console.error(error);
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ message: 'Erro ao enviar email', error })
-        };
-    }
+    const command = new SendEmailCommand(params);
+    const result = await ses.send(command);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: "E-mail enviado com sucesso!", result }),
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message }),
+    };
+  }
 };
