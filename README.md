@@ -11,7 +11,6 @@ O objetivo principal deste projeto é criar uma função Lambda funcional, hospe
 - Seja capaz de **enviar e-mails** usando o Amazon SES.
 - Esteja devidamente **documentada** e com seu **código-fonte publicado no GitHub**.
 - Receba parâmetros (destinatário, assunto e mensagem) através de uma requisição HTTP POST.
-- Esteja exposta via API Gateway para testes com Postman ou outras ferramentas.
 
 ---
 
