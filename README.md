@@ -19,10 +19,8 @@ O objetivo principal deste projeto é criar uma função Lambda funcional, hospe
 
 - **AWS Lambda** (Node.js 18.x)
 - **Amazon SES** (Simple Email Service)
-- **AWS API Gateway** (HTTP API)
 - **Node.js**
 - **JavaScript**
-- **Postman** (para testes)
 
 ---
 
@@ -35,6 +33,7 @@ awsLambdaEmail/
 
 ## 🔧 Funcionamento
 
+Os e-mails de destino e origem devem ser verificados na mesma região da Lambda no Amazon SES.
 A função recebe um JSON no seguinte formato:
 
 ```json
